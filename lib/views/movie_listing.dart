@@ -58,24 +58,51 @@ class _MovieListingState extends State<MovieListing> {
               ),
             ),
             const SizedBox(height: 48),
-            const Row(
-              children: [
-                Text(
-                  'Runtime: 112 minutes',
-                  style: TextStyle(
-                    color: cinemaFontMuted,
-                    fontSize: 16,
-                  ),
-                ),
-                SizedBox(width: 20),
-                Text(
-                  'Genre: Horror/Fantasy',
-                  style: TextStyle(
-                    color: cinemaFontMuted,
-                    fontSize: 16,
-                  ),
-                ),
-              ],
+            LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth > 600) {
+                  return const Row(
+                    children: [
+                      Text(
+                        'Runtime: 112 minutes',
+                        style: TextStyle(
+                          color: cinemaFontMuted,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        'Genre: Horror/Fantasy',
+                        style: TextStyle(
+                          color: cinemaFontMuted,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Runtime: 112 minutes',
+                        style: TextStyle(
+                          color: cinemaFontMuted,
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'Genre: Horror/Fantasy',
+                        style: TextStyle(
+                          color: cinemaFontMuted,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              },
             ),
             const SizedBox(height: 32),
             const Text(
