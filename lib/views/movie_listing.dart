@@ -29,7 +29,7 @@ class _MovieListingState extends State<MovieListing> {
       ),
       drawer: const NavDrawer(),
       body: Container(
-        color: cinemaSurface,
+        color: cinemaBackground,
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +37,7 @@ class _MovieListingState extends State<MovieListing> {
             const Text(
               "PAN'S LABYRINTH (2006) (15)",
               style: TextStyle(
-                color: Colors.white,
+                color: cinemaFontWhite,
                 fontSize: 28,
               ),
             ),
@@ -45,7 +45,7 @@ class _MovieListingState extends State<MovieListing> {
             const Text(
               'Southsea Cinema Room',
               style: TextStyle(
-                color: Colors.white,
+                color: cinemaFontWhite,
                 fontSize: 16,
               ),
             ),
@@ -53,7 +53,7 @@ class _MovieListingState extends State<MovieListing> {
             const Text(
               'Thursday 22 Oct 2026, 18:00 - ends at 19:52',
               style: TextStyle(
-                color: Colors.white,
+                color: cinemaFontWhite,
                 fontSize: 16,
               ),
             ),
@@ -63,7 +63,7 @@ class _MovieListingState extends State<MovieListing> {
                 Text(
                   'Runtime: 112 minutes',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: cinemaFontMuted,
                     fontSize: 16,
                   ),
                 ),
@@ -71,7 +71,7 @@ class _MovieListingState extends State<MovieListing> {
                 Text(
                   'Genre: Horror/Fantasy',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: cinemaFontMuted,
                     fontSize: 16,
                   ),
                 ),
@@ -81,7 +81,7 @@ class _MovieListingState extends State<MovieListing> {
             const Text(
               'In 1944 Francoist Spain, young Ofelia discovers a mysterious labyrinth where a faun gives her three dangerous tasks that may reveal her true identity.',
               style: TextStyle(
-                color: Colors.white,
+                color: cinemaFontWhite,
                 fontSize: 16,
               ),
             ),
@@ -89,7 +89,7 @@ class _MovieListingState extends State<MovieListing> {
             const Text(
               'Select Quantities (Up to 5 in total)',
               style: TextStyle(
-                color: Colors.white,
+                color: cinemaFontWhite,
                 fontSize: 16,
               ),
             ),
@@ -97,7 +97,7 @@ class _MovieListingState extends State<MovieListing> {
             const Text(
               'Tickets',
               style: TextStyle(
-                color: Colors.white,
+                color: cinemaFontWhite,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -109,6 +109,10 @@ class _MovieListingState extends State<MovieListing> {
                   width: 100,
                   child: DropdownMenu<int>(
                     initialSelection: _ticketQuantity,
+                    textStyle: const TextStyle(
+                      color: cinemaFontWhite,
+                      fontSize: 18,
+                    ),
                     dropdownMenuEntries: const [
                       DropdownMenuEntry(value: 1, label: '1'),
                       DropdownMenuEntry(value: 2, label: '2'),
@@ -129,7 +133,7 @@ class _MovieListingState extends State<MovieListing> {
                 const Text(
                   'Adult (£7.50)',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: cinemaFontWhite,
                     fontSize: 18,
                   ),
                 ),
@@ -137,6 +141,10 @@ class _MovieListingState extends State<MovieListing> {
             ),
             const SizedBox(height: 28),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: cinemaBrand,
+                foregroundColor: cinemaBackground,
+              ),
               onPressed: () {
                 setState(() {
                   _bookingMessage =
@@ -149,7 +157,7 @@ class _MovieListingState extends State<MovieListing> {
             Text(
               _bookingMessage,
               style: const TextStyle(
-                color: Colors.white,
+                color: cinemaBrandLight,
                 fontSize: 16,
               ),
             ),
