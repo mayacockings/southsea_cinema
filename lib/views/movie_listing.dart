@@ -176,7 +176,7 @@ class _MovieListingState extends State<MovieListing> {
               onPressed: () {
                 setState(() {
                   _bookingMessage =
-                      '$_ticketQuantity tickets added to the order.';
+                      '$_ticketQuantity ticket(s) added to the order.';
                 });
               },
               child: const Text('ADD TO ORDER'),
