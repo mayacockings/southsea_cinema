@@ -12,7 +12,7 @@ class MovieListing extends StatefulWidget {
 }
 
 class _MovieListingState extends State<MovieListing> {
-  int _ticketQuantity = 1;
+  int _ticketQuantity = 0;
   String _bookingMessage = '';
 
   @override
