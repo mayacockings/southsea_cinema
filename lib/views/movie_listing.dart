@@ -141,6 +141,7 @@ class _MovieListingState extends State<MovieListing> {
                       fontSize: 18,
                     ),
                     dropdownMenuEntries: const [
+                      DropdownMenuEntry(value: 0, label: '0'),
                       DropdownMenuEntry(value: 1, label: '1'),
                       DropdownMenuEntry(value: 2, label: '2'),
                       DropdownMenuEntry(value: 3, label: '3'),
