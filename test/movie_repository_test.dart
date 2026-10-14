@@ -24,8 +24,10 @@ void main() {
       expect(pansLabyrinth.screeningDate, 'Sunday 18th Oct 2026');
       expect(pansLabyrinth.screeningTime, '15:00');
       expect(pansLabyrinth.ticketPrice, 6);
-      expect(pansLabyrinth.synopsis, 'In 1944 Francoist Spain, young Ofelia discovers a mysterious labyrinth where a faun gives her three dangerous tasks that may reveal her true identity.');
-      expect(pansLabyrinth.posterImagePath, 'assets/images/pans_labyrinth.jpeg');
+      expect(pansLabyrinth.synopsis,
+          'In 1944 Francoist Spain, young Ofelia discovers a mysterious labyrinth where a faun gives her three dangerous tasks that may reveal her true identity.');
+      expect(
+          pansLabyrinth.posterImagePath, 'assets/images/pans_labyrinth.jpeg');
 
       final Movie arrival = movies[1];
       expect(arrival.id, 'arrival');
@@ -36,7 +38,8 @@ void main() {
       expect(arrival.screeningDate, 'Wednesday 21st Oct 2026');
       expect(arrival.screeningTime, '19:00');
       expect(arrival.ticketPrice, 6);
-      expect(arrival.synopsis, 'A linguist works to understand the language of alien visitors after spacecraft arrive on Earth.');
+      expect(arrival.synopsis,
+          'A linguist works to understand the language of alien visitors after spacecraft arrive on Earth.');
       expect(arrival.posterImagePath, 'assets/images/arrival.jpeg');
 
       final Movie handmaiden = movies[2];
@@ -48,7 +51,8 @@ void main() {
       expect(handmaiden.screeningDate, 'Friday 22nd Oct 2026');
       expect(handmaiden.screeningTime, '20:00');
       expect(handmaiden.ticketPrice, 6);
-      expect(handmaiden.synopsis, "In 1930's Korea, a con man hires a pickpocket to become the handmaiden of a Japanese heiress, but their plans are complicated by unexpected feelings.");
+      expect(handmaiden.synopsis,
+          "In 1930's Korea, a con man hires a pickpocket to become the handmaiden of a Japanese heiress, but their plans are complicated by unexpected feelings.");
       expect(handmaiden.posterImagePath, 'assets/images/the_handmaiden.jpeg');
     });
 

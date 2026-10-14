@@ -5,8 +5,7 @@ import 'package:southsea_cinema/widgets/movie_card.dart';
 
 void main() {
   group('App smoke tests', () {
-    testWidgets('App displays HomeView as home',
-        (WidgetTester tester) async {
+    testWidgets('App displays HomeView as home', (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
 
       expect(find.byType(HomeView), findsOneWidget);
