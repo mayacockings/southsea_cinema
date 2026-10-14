@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
+import 'package:southsea_cinema/models/movie.dart';
+
 
 class MovieListing extends StatefulWidget {
-  const MovieListing({super.key});
+  final Movie movie;
+
+  const MovieListing({
+    super.key,
+    required this.movie,
+  });
 
   @override
   State<MovieListing> createState() {
@@ -19,6 +26,12 @@ class _MovieListingState extends State<MovieListing> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: const Text(
           appTitle,
           style: cinemaHeaderStyle,
@@ -34,9 +47,9 @@ class _MovieListingState extends State<MovieListing> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "PAN'S LABYRINTH (2006) (15)",
-              style: TextStyle(
+            Text(
+              '${widget.movie.title.toUpperCase()} (${widget.movie.ageRating})',
+              style: const TextStyle(
                 color: cinemaFontWhite,
                 fontSize: 28,
               ),
@@ -50,9 +63,9 @@ class _MovieListingState extends State<MovieListing> {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
-              'Thursday 22 Oct 2026, 18:00 - ends at 19:52',
-              style: TextStyle(
+            Text(
+              '${widget.movie.screeningDate}, ${widget.movie.screeningTime}',
+              style: const TextStyle(
                 color: cinemaFontWhite,
                 fontSize: 16,
               ),
@@ -61,19 +74,19 @@ class _MovieListingState extends State<MovieListing> {
             LayoutBuilder(
               builder: (context, constraints) {
                 if (constraints.maxWidth > 600) {
-                  return const Row(
+                  return Row(
                     children: [
                       Text(
-                        'Runtime: 112 minutes',
-                        style: TextStyle(
+                        'Runtime: ${widget.movie.runtime}',
+                        style: const TextStyle(
                           color: cinemaFontMuted,
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       Text(
-                        'Genre: Horror/Fantasy',
-                        style: TextStyle(
+                        'Genre: ${widget.movie.genre}',
+                        style: const TextStyle(
                           color: cinemaFontMuted,
                           fontSize: 16,
                         ),
@@ -81,20 +94,20 @@ class _MovieListingState extends State<MovieListing> {
                     ],
                   );
                 } else {
-                  return const Column(
+                  return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Runtime: 112 minutes',
-                        style: TextStyle(
+                        'Runtime: ${widget.movie.runtime}',
+                        style: const TextStyle(
                           color: cinemaFontMuted,
                           fontSize: 16,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
-                        'Genre: Horror/Fantasy',
-                        style: TextStyle(
+                        'Genre: ${widget.movie.genre}',
+                        style: const TextStyle(
                           color: cinemaFontMuted,
                           fontSize: 16,
                         ),
@@ -105,9 +118,9 @@ class _MovieListingState extends State<MovieListing> {
               },
             ),
             const SizedBox(height: 32),
-            const Text(
-              'In 1944 Francoist Spain, young Ofelia discovers a mysterious labyrinth where a faun gives her three dangerous tasks that may reveal her true identity.',
-              style: TextStyle(
+            Text(
+              widget.movie.synopsis,
+              style: const TextStyle(
                 color: cinemaFontWhite,
                 fontSize: 16,
               ),
@@ -158,9 +171,9 @@ class _MovieListingState extends State<MovieListing> {
                   ),
                 ),
                 const SizedBox(width: 16),
-                const Text(
-                  'Adult (£7.50)',
-                  style: TextStyle(
+                Text(
+                  'Adult (£${widget.movie.ticketPrice.toStringAsFixed(2)})',
+                  style: const TextStyle(
                     color: cinemaFontWhite,
                     fontSize: 18,
                   ),
