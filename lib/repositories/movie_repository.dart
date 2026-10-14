@@ -12,7 +12,7 @@ class MovieRepository {
         runtime: '119 minutes',
         screeningDate: 'Sunday 18th Oct 2026',
         screeningTime: '15:00',
-        ticketPrice: 6.99,
+        ticketPrice: 6,
         posterImagePath: 'assets/images/pans_labyrinth.jpeg',
       ),
       const Movie(
@@ -24,7 +24,7 @@ class MovieRepository {
         runtime: '116 minutes',
         screeningDate: 'Wednesday 21st Oct 2026',
         screeningTime: '19:00',
-        ticketPrice: 6.99,
+        ticketPrice: 6,
         posterImagePath: 'assets/images/arrival.jpeg',
       ),
       const Movie(
@@ -36,7 +36,7 @@ class MovieRepository {
         runtime: '145 minutes',
         screeningDate: 'Friday 22nd Oct 2026',
         screeningTime: '20:00',
-        ticketPrice: 6.99,
+        ticketPrice: 6,
         posterImagePath: 'assets/images/the_handmaiden.jpeg',
       )
     ];
