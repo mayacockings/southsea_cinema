@@ -27,6 +27,18 @@ class MovieRepository {
         ticketPrice: 6.99,
         posterImagePath: 'assets/images/arrival.jpeg',
       ),
+      const Movie(
+        id: 'the-handmaiden',
+        title: 'The Handmaiden',
+        genre: 'Thriller/Drama',
+        synopsis: "In 1930's Korea, a con man hires a pickpocket to become the handmaiden of a Japanese heiress, but their plans are complicated by unexpected feelings.",
+        ageRating: '18',
+        runtime: '145 minutes',
+        screeningDate: 'Friday 22nd Oct 2026',
+        screeningTime: '20:00',
+        ticketPrice: 6.99,
+        posterImagePath: 'assets/images/the_handmaiden.jpeg',
+      )
     ];
   }
 }
