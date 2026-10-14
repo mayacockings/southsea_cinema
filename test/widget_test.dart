@@ -14,9 +14,9 @@ void main() {
       expect(find.byType(MovieCard), findsWidgets);
       expect(find.text('BOOK NOW'), findsWidgets);
     });
-    
+
     testWidgets('Tapping BOOK NOW opens the selected movie listing',
-      (WidgetTester tester) async {
+        (WidgetTester tester) async {
       await tester.pumpWidget(const SouthseaCinemaApp());
 
       await tester.tap(find.text('BOOK NOW').first);
@@ -27,7 +27,10 @@ void main() {
       expect(find.text('Sunday 18th Oct 2026, 15:00'), findsOneWidget);
       expect(find.text('Runtime: 119 minutes'), findsOneWidget);
       expect(find.text('Genre: Horror/Fantasy'), findsOneWidget);
-      expect(find.text('In 1944 Francoist Spain, young Ofelia discovers a mysterious labyrinth where a faun gives her three dangerous tasks that may reveal her true identity.'), findsOneWidget);
+      expect(
+          find.text(
+              'In 1944 Francoist Spain, young Ofelia discovers a mysterious labyrinth where a faun gives her three dangerous tasks that may reveal her true identity.'),
+          findsOneWidget);
       expect(find.text('Tickets (£6.00 each)'), findsOneWidget);
 
       await tester.ensureVisible(find.text('ADD TO ORDER'));
