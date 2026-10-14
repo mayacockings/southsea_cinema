@@ -13,7 +13,9 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: cinemaSurface,
+      color: cinemaBackground,
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
       margin: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 8,
@@ -28,8 +30,8 @@ class MovieCard extends StatelessWidget {
               children: [
                 Image.asset(
                   movie.posterImagePath,
-                  width: 80,
-                  height: 120,
+                  width: 120,
+                  height: 180,
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(width: 16),
