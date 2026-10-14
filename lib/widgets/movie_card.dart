@@ -21,13 +21,30 @@ class MovieCard extends StatelessWidget {
         vertical: 8,
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              '${movie.title} (${movie.ageRating})',
-              style: cinemaHeaderStyle,
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: movie.title.toUpperCase(),
+                    style: const TextStyle(
+                      color: cinemaBrand,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextSpan(
+                    text: ' (${movie.ageRating})',
+                    style: const TextStyle(
+                      color: cinemaFontMuted,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 16),
             Row(
@@ -84,12 +101,17 @@ class MovieCard extends StatelessWidget {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: cinemaBrand,
-                    foregroundColor: cinemaBackground,
+                    foregroundColor: cinemaFontWhite,
                   ),
                   onPressed: () {
                     print('Book tickets for ${movie.title}');
                   },
-                  child: const Text('BOOK NOW'),
+                  child: const Text(
+                    'BOOK NOW',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ],
             ),
