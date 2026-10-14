@@ -17,7 +17,7 @@ class MovieCard extends StatelessWidget {
       elevation: 0,
       surfaceTintColor: Colors.transparent,
       margin: const EdgeInsets.symmetric(
-        horizontal: 16,
+        horizontal: 8,
         vertical: 8,
       ),
       child: Padding(
@@ -25,6 +25,11 @@ class MovieCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              '${movie.title} (${movie.ageRating})',
+              style: cinemaHeaderStyle,
+            ),
+            const SizedBox(height: 16),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -39,11 +44,6 @@ class MovieCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${movie.title} (${movie.ageRating})',
-                        style: cinemaHeaderStyle,
-                      ),
-                      const SizedBox(height: 8),
                       Text(
                         'Genre: ${movie.genre}',
                         style: const TextStyle(
@@ -64,13 +64,6 @@ class MovieCard extends StatelessWidget {
                           color: cinemaFontWhite,
                         ),
                       ),
-                      const SizedBox(height: 12),
-                      Text(
-                        '${movie.screeningDate}, ${movie.screeningTime}',
-                        style: const TextStyle(
-                          color: cinemaFontWhite,
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -78,8 +71,16 @@ class MovieCard extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Expanded(
+                  child: Text(
+                    '${movie.screeningDate}, ${movie.screeningTime}',
+                    style: const TextStyle(
+                      color: cinemaFontWhite,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: cinemaBrand,
