@@ -6,6 +6,7 @@ class MovieRepository {
       const Movie(
         id: 'pans-labyrinth',
         title: "Pan's Labyrinth",
+        genre: 'Horror/Fantasy',
         synopsis: 'In 1944 Francoist Spain, young Ofelia discovers a mysterious labyrinth where a faun gives her three dangerous tasks that may reveal her true identity.',
         ageRating: '15',
         runtime: '119 minutes',
@@ -17,6 +18,7 @@ class MovieRepository {
       const Movie(
         id: 'arrival',
         title: 'Arrival',
+        genre: 'Sci-Fi/Drama',
         synopsis: 'A linguist works to understand the language of alien visitors after spacecraft arrive on Earth.',
         ageRating: '12A',
         runtime: '116 minutes',

@@ -1,6 +1,7 @@
 class Movie {
   final String id;
   final String title;
+  final String genre;
   final String synopsis;
   final String ageRating;
   final String runtime;
@@ -12,6 +13,7 @@ class Movie {
   const Movie({
     required this.id,
     required this.title,
+    required this.genre,
     required this.synopsis,
     required this.ageRating,
     required this.runtime,
