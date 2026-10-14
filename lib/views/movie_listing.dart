@@ -138,7 +138,7 @@ class _MovieListingState extends State<MovieListing> {
                 children: [
                   Expanded(
                     child: Text(
-                      'Tickets (£${widget.movie.ticketPrice.toStringAsFixed(2)} each)',
+                      'Tickets (${widget.movie.formattedPrice} each)',
                       style: const TextStyle(
                         color: cinemaFontWhite,
                         fontSize: 16,
