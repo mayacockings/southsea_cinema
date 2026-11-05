@@ -3,6 +3,7 @@ import 'package:southsea_cinema/main.dart';
 import 'package:southsea_cinema/views/home_view.dart';
 import 'package:southsea_cinema/widgets/movie_card.dart';
 import 'package:southsea_cinema/views/movie_listing.dart';
+import 'package:southsea_cinema/constants.dart';
 
 void main() {
   group('App smoke tests', () {
@@ -10,7 +11,7 @@ void main() {
       await tester.pumpWidget(const SouthseaCinemaApp());
 
       expect(find.byType(HomeView), findsOneWidget);
-      expect(find.text('Southsea Cinema'), findsOneWidget);
+      expect(find.text(appTitle), findsOneWidget);
       expect(find.byType(MovieCard), findsWidgets);
       expect(find.text('BOOK NOW'), findsWidgets);
     });
