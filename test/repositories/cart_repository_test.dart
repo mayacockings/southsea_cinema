@@ -31,4 +31,14 @@ void main() {
     expect(items.first.movie.id, movie.id);
     expect(items.first.quantity, 2);
   });
+
+  test('addItem combines quantities for the same movie', () {
+    cart.addItem(movie, 2);
+    cart.addItem(movie, 3);
+
+    final items = cart.getItems();
+
+    expect(items.length, 1);
+    expect(items.first.quantity, 5);
+  });
 }
