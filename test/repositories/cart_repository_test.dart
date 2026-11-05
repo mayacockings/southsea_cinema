@@ -78,4 +78,13 @@ void main() {
 
     expect(items.isEmpty, true);
   });
+
+  test('total calculates the total ticket cost', () {
+    cart.addItem(movie, 2);
+    cart.addItem(secondMovie, 3);
+
+    final total = cart.total;
+
+    expect(total, 36);
+  });
 }
