@@ -67,4 +67,15 @@ void main() {
     expect(items.first.movie.id, secondMovie.id);
     expect(items.first.quantity, 3);
   });
+
+  test('clear removes all tickets from the basket', () {
+    cart.addItem(movie, 2);
+    cart.addItem(secondMovie, 3);
+
+    cart.clear();
+
+    final items = cart.getItems();
+
+    expect(items.isEmpty, true);
+  });
 }
