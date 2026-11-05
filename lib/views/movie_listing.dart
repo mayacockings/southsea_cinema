@@ -3,6 +3,7 @@ import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/nav_drawer.dart';
 import 'package:southsea_cinema/models/movie.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
+import 'package:southsea_cinema/repositories/cart_repository.dart';
 
 class MovieListing extends StatefulWidget {
   final Movie movie;
@@ -172,6 +173,13 @@ class _MovieListingState extends State<MovieListing> {
               PrimaryButton(
                 label: 'ADD TO ORDER',
                 onPressed: () {
+                  if (_ticketQuantity > 0) {
+                    CartRepository.instance.addItem(
+                      widget.movie,
+                      _ticketQuantity,
+                    );
+                  }
+
                   setState(() {
                     _bookingMessage =
                         '$_ticketQuantity ticket(s) added to the order.';
