@@ -39,4 +39,8 @@ class CartRepository {
       (item) => item.movie.id == movie.id,
     );
   }
+
+  void clear() {
+    _items.clear();
+  }
 }
