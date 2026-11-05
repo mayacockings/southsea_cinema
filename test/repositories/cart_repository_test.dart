@@ -18,6 +18,19 @@ void main() {
     posterImagePath: 'assets/images/test_movie.jpg',
   );
 
+  const secondMovie = Movie(
+    id: 'second-test-movie',
+    title: 'Second Test Movie',
+    genre: 'Comedy',
+    synopsis: 'Testing.',
+    ageRating: 'PG',
+    runtime: '90 minutes',
+    screeningDate: '06 November 2026',
+    screeningTime: '19:00',
+    ticketPrice: 8,
+    posterImagePath: 'assets/images/second_test_movie.jpg',
+  );
+
   setUp(() {
     cart.clear();
   });
@@ -40,5 +53,18 @@ void main() {
 
     expect(items.length, 1);
     expect(items.first.quantity, 5);
+  });
+
+  test('removeItem removes only the selected movie', () {
+    cart.addItem(movie, 2);
+    cart.addItem(secondMovie, 3);
+
+    cart.removeItem(movie);
+
+    final items = cart.getItems();
+
+    expect(items.length, 1);
+    expect(items.first.movie.id, secondMovie.id);
+    expect(items.first.quantity, 3);
   });
 }
