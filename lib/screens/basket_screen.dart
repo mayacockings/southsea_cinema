@@ -1,16 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:southsea_cinema/constants.dart';
+import 'package:southsea_cinema/models/cart_item.dart';
+import 'package:southsea_cinema/repositories/cart_repository.dart';
 
-class BasketScreen extends StatelessWidget {
+class BasketScreen extends StatefulWidget {
   const BasketScreen({super.key});
 
   @override
+  State<BasketScreen> createState() {
+    return _BasketScreenState();
+  }
+}
+
+class _BasketScreenState extends State<BasketScreen> {
+  String _confirmationMessage = '';
+
+  @override
   Widget build(BuildContext context) {
+    final CartRepository cart = CartRepository.instance;
+    final List<CartItem> items = cart.getItems();
+
+    final Widget content;
+
+    if (items.isEmpty) {
+      if (_confirmationMessage.isNotEmpty) {
+        content = Column(
+          children: [
+            const Text('Empty basket placeholder'),
+            Text(_confirmationMessage),
+          ],
+        );
+      } else {
+        content = const Text('Empty basket placeholder');
+      }
+    } else {
+      content = const Text('Basket list placeholder');
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Basket'),
+        title: const Text(appTitle),
       ),
-      body: const Center(
-        child: Text('My Basket'),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: content,
       ),
     );
   }
