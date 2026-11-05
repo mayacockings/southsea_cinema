@@ -43,4 +43,14 @@ class CartRepository {
   void clear() {
     _items.clear();
   }
+
+  double get total {
+    double sum = 0;
+
+    for (final item in _items) {
+      sum += item.lineTotal;
+    }
+
+    return sum;
+  }
 }
