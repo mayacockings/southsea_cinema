@@ -31,13 +31,7 @@ class _MovieListingState extends State<MovieListing> {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
-          appTitle,
-          style: cinemaHeaderStyle,
-        ),
-        backgroundColor: cinemaSurface,
-        iconTheme: const IconThemeData(color: cinemaBrand),
-        elevation: 0,
+        title: const Text(appTitle),
       ),
       drawer: const NavDrawer(),
       body: Container(
