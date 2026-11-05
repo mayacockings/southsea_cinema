@@ -33,4 +33,10 @@ class CartRepository {
       );
     }
   }
+
+  void removeItem(Movie movie) {
+    _items.removeWhere(
+      (item) => item.movie.id == movie.id,
+    );
+  }
 }
