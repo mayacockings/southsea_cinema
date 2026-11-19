@@ -50,62 +50,145 @@ class _BasketScreenState extends State<BasketScreen> {
     );
   }
 
-  Widget _buildBasketList(List<CartItem> items) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Your Basket',
-          style: TextStyle(
-            color: cinemaFontWhite,
-            fontSize: 24,
-          ),
-        ),
-        const SizedBox(height: 16),
-        for (final item in items)
-          Card(
-            color: cinemaSurface,
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.movie.title,
-                    style: const TextStyle(
-                      color: cinemaFontWhite,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Tickets: ${item.quantity}',
-                    style: const TextStyle(
-                      color: cinemaFontMuted,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Price per ticket: ${item.movie.formattedPrice}',
-                    style: const TextStyle(
-                      color: cinemaFontMuted,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'Subtotal: £${item.lineTotal.toStringAsFixed(2)}',
-                    style: const TextStyle(
-                      color: cinemaFontWhite,
-                      fontSize: 16,
-                    ),
-                  ),
-                ],
+  Widget _buildLineItem(CartItem item) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              '${item.quantity} Tickets',
+              style: const TextStyle(
+                color: cinemaBrand,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),
-      ],
+          Expanded(
+            flex: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${item.quantity} Standard',
+                  style: const TextStyle(
+                    color: cinemaFontWhite,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  item.movie.title.toUpperCase(),
+                  style: const TextStyle(
+                    color: cinemaFontWhite,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${item.movie.screeningDate}, '
+                  '${item.movie.screeningTime}',
+                  style: const TextStyle(
+                    color: cinemaFontWhite,
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                const Text(
+                  'Southsea Cinema Room',
+                  style: TextStyle(
+                    color: cinemaFontWhite,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              '£${item.lineTotal.toStringAsFixed(2)}',
+              textAlign: TextAlign.end,
+              style: const TextStyle(
+                color: cinemaFontWhite,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBasketList(List<CartItem> items) {
+    final List<Widget> children = [];
+
+    children.add(
+      const Text(
+        'MY ORDER',
+        style: TextStyle(
+          color: cinemaFontWhite,
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+
+    children.add(const SizedBox(height: 24));
+
+    children.add(
+      const Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Text(
+              'Item',
+              style: TextStyle(
+                color: cinemaFontWhite,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 5,
+            child: Text(
+              'Details',
+              style: TextStyle(
+                color: cinemaFontWhite,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              'Price',
+              textAlign: TextAlign.end,
+              style: TextStyle(
+                color: cinemaFontWhite,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    children.add(const SizedBox(height: 16));
+
+    for (final CartItem item in items) {
+      children.add(_buildLineItem(item));
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
     );
   }
 
@@ -119,9 +202,17 @@ class _BasketScreenState extends State<BasketScreen> {
     if (items.isEmpty) {
       if (_confirmationMessage.isNotEmpty) {
         content = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildEmptyState(),
-            Text(_confirmationMessage),
+            const SizedBox(height: 12),
+            Text(
+              _confirmationMessage,
+              style: const TextStyle(
+                color: cinemaFontWhite,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         );
       } else {
