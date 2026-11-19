@@ -77,4 +77,33 @@ void main() {
     expect(find.text('2 Tickets'), findsNothing);
     expect(CartRepository.instance.getItems(), isEmpty);
   });
+
+  testWidgets('BasketScreen clears basket when buying tickets', (
+    WidgetTester tester,
+  ) async {
+    final Movie movie = MovieRepository().getMovies().first;
+
+    CartRepository.instance.addItem(movie, 2);
+
+    await tester.pumpWidget(
+      const MaterialApp(home: BasketScreen()),
+    );
+
+    expect(find.text('2 Tickets'), findsOneWidget);
+    expect(find.text('BUY TICKETS'), findsOneWidget);
+
+    await tester.tap(find.text('BUY TICKETS'));
+    await tester.pump();
+
+    expect(CartRepository.instance.getItems(), isEmpty);
+
+    expect(find.text('Your basket is empty.'), findsOneWidget);
+
+    expect(
+      find.text('Your tickets have been booked successfully!'),
+      findsOneWidget,
+    );
+
+    expect(find.text('BUY TICKETS'), findsNothing);
+  });
 }
