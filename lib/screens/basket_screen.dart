@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/models/cart_item.dart';
 import 'package:southsea_cinema/repositories/cart_repository.dart';
+import 'package:southsea_cinema/widgets/primary_button.dart';
 
 class BasketScreen extends StatefulWidget {
   const BasketScreen({super.key});
@@ -147,36 +149,36 @@ class _BasketScreenState extends State<BasketScreen> {
   }
 
   Widget _buildTotalRow(
-    String label, 
+    String label,
     String value, {
-      bool emphasise = false, 
-    }) {
-      final TextStyle style; 
+    bool emphasise = false,
+  }) {
+    final TextStyle style;
 
-      if (emphasise) { 
-        style = const TextStyle(
-          color: cinemaFontWhite,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        );
-      } else {
-        style = const TextStyle(
-          color: cinemaFontWhite,
-          fontSize: 16,
-        );
-      }
-
-      return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4), 
-        child:Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-          children: [
-            Text(label, style: style),
-            Text(value, style: style),
-          ],
-        ),
+    if (emphasise) {
+      style = const TextStyle(
+        color: cinemaFontWhite,
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      );
+    } else {
+      style = const TextStyle(
+        color: cinemaFontWhite,
+        fontSize: 16,
       );
     }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label, style: style),
+          Text(value, style: style),
+        ],
+      ),
+    );
+  }
 
   Widget _buildBasketList(CartRepository cart, List<CartItem> items) {
     final List<Widget> children = [];
@@ -260,6 +262,45 @@ class _BasketScreenState extends State<BasketScreen> {
         emphasise: true,
       ),
     );
+
+    children.add(const SizedBox(height: 32));
+
+    children.add(
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          PrimaryButton(
+            label: 'UPDATE ORDER',
+            onPressed: () {
+              setState(() {});
+            },
+          ),
+          PrimaryButton(
+            label: 'BUY TICKETS',
+            onPressed: () {
+              setState(() {
+                cart.clear();
+                _confirmationMessage =
+                    'Your tickets have been booked successfully!';
+              });
+            },
+          ),
+        ],
+      ),
+    );
+
+    if (_confirmationMessage.isNotEmpty) {
+      children.add(const SizedBox(height: 12));
+      children.add(
+        Text(
+          _confirmationMessage,
+          style: const TextStyle(
+            color: cinemaFontWhite,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      );
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
