@@ -56,5 +56,4 @@ void main() {
 
     expect(find.text('Settings saved for Alex Smith'), findsOneWidget);
   });
-  
 }
