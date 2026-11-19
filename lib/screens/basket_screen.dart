@@ -50,7 +50,7 @@ class _BasketScreenState extends State<BasketScreen> {
     );
   }
 
-  Widget _buildLineItem(CartItem item) {
+  Widget _buildLineItem(CartRepository cart, CartItem item) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
@@ -137,7 +137,7 @@ class _BasketScreenState extends State<BasketScreen> {
             ),
             onPressed: () {
               setState(() {
-                CartRepository.instance.removeItem(item.movie);
+                cart.removeItem(item.movie);
               });
             },
           ),
@@ -146,7 +146,39 @@ class _BasketScreenState extends State<BasketScreen> {
     );
   }
 
-  Widget _buildBasketList(List<CartItem> items) {
+  Widget _buildTotalRow(
+    String label, 
+    String value, {
+      bool emphasise = false, 
+    }) {
+      final TextStyle style; 
+
+      if (emphasise) { 
+        style = const TextStyle(
+          color: cinemaFontWhite,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        );
+      } else {
+        style = const TextStyle(
+          color: cinemaFontWhite,
+          fontSize: 16,
+        );
+      }
+
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4), 
+        child:Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+          children: [
+            Text(label, style: style),
+            Text(value, style: style),
+          ],
+        ),
+      );
+    }
+
+  Widget _buildBasketList(CartRepository cart, List<CartItem> items) {
     final List<Widget> children = [];
 
     children.add(
@@ -207,8 +239,32 @@ class _BasketScreenState extends State<BasketScreen> {
     children.add(const SizedBox(height: 16));
 
     for (final CartItem item in items) {
-      children.add(_buildLineItem(item));
+      children.add(_buildLineItem(cart, item));
     }
+
+    children.add(const SizedBox(height: 24));
+
+    const double serviceCharge = 4.00;
+
+    children.add(
+      _buildTotalRow(
+        'Service Charge',
+        '£${serviceCharge.toStringAsFixed(2)}',
+      ),
+    );
+
+    children.add(const SizedBox(height: 8));
+
+    final double totalDue =
+        cart.total + serviceCharge;
+
+    children.add(
+      _buildTotalRow(
+        'Total Due',
+        '£${totalDue.toStringAsFixed(2)}',
+        emphasise: true,
+      ),
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,7 +299,7 @@ class _BasketScreenState extends State<BasketScreen> {
         content = _buildEmptyState();
       }
     } else {
-      content = _buildBasketList(items);
+      content = _buildBasketList(cart, items);
     }
 
     return Scaffold(
