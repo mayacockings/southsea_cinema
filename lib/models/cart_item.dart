@@ -11,5 +11,5 @@ class CartItem {
 
   double get lineTotal {
     return movie.ticketPrice * quantity;
-  } 
+  }
 }
