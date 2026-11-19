@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/screens/settings_screen.dart';
+import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 
 void main() {
+  setUp(() {
+    SharedPreferencesAsyncPlatform.instance =
+        InMemorySharedPreferencesAsync.empty();
+  });
+
   testWidgets('settings screen displays customer form', (tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: SettingsScreen(),
       ),
     );
+    await tester.pumpAndSettle();
 
     expect(find.text('My Settings'), findsOneWidget);
     expect(find.text('Full Name'), findsOneWidget);
@@ -31,6 +39,7 @@ void main() {
         home: SettingsScreen(),
       ),
     );
+    await tester.pumpAndSettle();
 
     await tester.enterText(find.byType(TextField).at(0), 'Alex Smith');
     await tester.enterText(find.byType(TextField).at(1), 'Portsmouth');
@@ -52,7 +61,7 @@ void main() {
     await tester.pump();
 
     await tester.tap(find.text('SAVE SETTINGS'));
-    await tester.pump();
+    await tester.pumpAndSettle();
 
     expect(find.text('Settings saved for Alex Smith'), findsOneWidget);
   });

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
 import 'package:southsea_cinema/models/user_settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -13,6 +14,14 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  static const String _nameKey = 'cinema_name';
+  static const String _addressKey = 'cinema_address';
+  static const String _emailKey = 'cinema_email';
+  static const String _patronKey = 'cinema_patron_number';
+  static const String _newsletterKey = 'cinema_receive_newsletter';
+
+  final SharedPreferencesAsync _preferences = SharedPreferencesAsync();
+
   late TextEditingController _nameController;
   late TextEditingController _addressController;
   late TextEditingController _emailController;
@@ -28,6 +37,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _addressController = TextEditingController();
     _emailController = TextEditingController();
     _patronController = TextEditingController();
+    _loadSettings();
+  }
+
+  Future<void> _loadSettings() async {
+    final String name = await _preferences.getString(_nameKey) ?? '';
+    final String address = await _preferences.getString(_addressKey) ?? '';
+    final String email = await _preferences.getString(_emailKey) ?? '';
+    final String patronNumber = await _preferences.getString(_patronKey) ?? '';
+    final bool receiveNewsletter =
+        await _preferences.getBool(_newsletterKey) ?? false;
+
+    if (!mounted) return;
+
+    setState(() {
+      _nameController.text = name;
+      _addressController.text = address;
+      _emailController.text = email;
+      _patronController.text = patronNumber;
+      _receiveNewsletter = receiveNewsletter;
+    });
   }
 
   @override
@@ -39,7 +68,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.dispose();
   }
 
-  void _saveSettings() {
+  Future<void> _saveSettings() async {
     final String name = _nameController.text.trim();
     final String address = _addressController.text.trim();
     final String email = _emailController.text.trim();
@@ -52,6 +81,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
       patronNumber: patronNumber,
       receiveNewsletter: _receiveNewsletter,
     );
+
+    await _preferences.setString(_nameKey, settings.name);
+    await _preferences.setString(_addressKey, settings.address);
+    await _preferences.setString(_emailKey, settings.email);
+    await _preferences.setString(_patronKey, settings.patronNumber);
+    await _preferences.setBool(
+      _newsletterKey,
+      settings.receiveNewsletter,
+    );
+
+    if (!mounted) return;
 
     setState(() {
       _confirmationMessage = 'Settings saved for ${settings.name}';
