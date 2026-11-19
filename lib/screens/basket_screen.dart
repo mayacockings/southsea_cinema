@@ -244,24 +244,19 @@ class _BasketScreenState extends State<BasketScreen> {
 
     children.add(const SizedBox(height: 24));
 
-    const double serviceCharge = 4.00;
-
     children.add(
       _buildTotalRow(
         'Service Charge',
-        '£${serviceCharge.toStringAsFixed(2)}',
+        '£${cart.getServiceCharge().toStringAsFixed(2)}',
       ),
     );
 
     children.add(const SizedBox(height: 8));
 
-    final double totalDue =
-        cart.total + serviceCharge;
-
     children.add(
       _buildTotalRow(
         'Total Due',
-        '£${totalDue.toStringAsFixed(2)}',
+        '£${cart.getTotalDue().toStringAsFixed(2)}',
         emphasise: true,
       ),
     );
