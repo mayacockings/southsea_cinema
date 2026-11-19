@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:southsea_cinema/screens/settings_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_platform_interface/in_memory_shared_preferences_async.dart';
 import 'package:shared_preferences_platform_interface/shared_preferences_async_platform_interface.dart';
 
@@ -64,5 +65,132 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Settings saved for Alex Smith'), findsOneWidget);
+  });
+
+  testWidgets('settings screen loads previously saved preferences',
+      (tester) async {
+    final preferences = SharedPreferencesAsync();
+
+    await preferences.setString('cinema_name', 'Alex Smith');
+    await preferences.setString('cinema_address', 'Portsmouth');
+    await preferences.setString('cinema_email', 'alex@example.com');
+    await preferences.setString('cinema_patron_number', '1234');
+    await preferences.setBool('cinema_receive_newsletter', true);
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: SettingsScreen(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+        tester.widget<TextField>(find.byType(TextField).at(0)).controller!.text,
+        'Alex Smith');
+    expect(
+        tester.widget<TextField>(find.byType(TextField).at(1)).controller!.text,
+        'Portsmouth');
+    expect(
+        tester.widget<TextField>(find.byType(TextField).at(2)).controller!.text,
+        'alex@example.com');
+    expect(
+        tester.widget<TextField>(find.byType(TextField).at(3)).controller!.text,
+        '1234');
+
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
+  });
+
+  testWidgets('saving edited settings updates stored preferences',
+      (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: SettingsScreen(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField).at(0), 'Jamie Taylor');
+    await tester.enterText(find.byType(TextField).at(1), 'Brighton');
+    await tester.enterText(
+      find.byType(TextField).at(2),
+      'jamie@example.com',
+    );
+    await tester.enterText(find.byType(TextField).at(3), '5678');
+
+    await tester.ensureVisible(find.byType(Switch));
+    await tester.pump();
+
+    await tester.tap(find.byType(Switch));
+    await tester.pump();
+
+    await tester.ensureVisible(find.text('SAVE SETTINGS'));
+    await tester.pump();
+
+    await tester.tap(find.text('SAVE SETTINGS'));
+    await tester.pumpAndSettle();
+
+    final preferences = SharedPreferencesAsync();
+
+    expect(await preferences.getString('cinema_name'), 'Jamie Taylor');
+    expect(await preferences.getString('cinema_address'), 'Brighton');
+    expect(await preferences.getString('cinema_email'), 'jamie@example.com');
+    expect(await preferences.getString('cinema_patron_number'), '5678');
+    expect(await preferences.getBool('cinema_receive_newsletter'), true);
+  });
+
+  testWidgets('reopening settings restores saved preferences', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: SettingsScreen(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextField).at(0), 'Alex Smith');
+    await tester.enterText(find.byType(TextField).at(1), 'Portsmouth');
+    await tester.enterText(
+      find.byType(TextField).at(2),
+      'alex@example.com',
+    );
+    await tester.enterText(find.byType(TextField).at(3), '1234');
+
+    await tester.ensureVisible(find.byType(Switch));
+    await tester.pump();
+    await tester.tap(find.byType(Switch));
+    await tester.pump();
+
+    await tester.ensureVisible(find.text('SAVE SETTINGS'));
+    await tester.pump();
+    await tester.tap(find.text('SAVE SETTINGS'));
+    await tester.pumpAndSettle();
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: SettingsScreen(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+        tester.widget<TextField>(find.byType(TextField).at(0)).controller!.text,
+        'Alex Smith');
+    expect(
+        tester.widget<TextField>(find.byType(TextField).at(1)).controller!.text,
+        'Portsmouth');
+    expect(
+        tester.widget<TextField>(find.byType(TextField).at(2)).controller!.text,
+        'alex@example.com');
+    expect(
+        tester.widget<TextField>(find.byType(TextField).at(3)).controller!.text,
+        '1234');
+
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
   });
 }
