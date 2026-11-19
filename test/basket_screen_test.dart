@@ -56,4 +56,25 @@ void main() {
 
     expect(find.text('BUY TICKETS'), findsOneWidget);
   });
+
+  testWidgets('BasketScreen removes tickets when delete button is pressed', (
+    WidgetTester tester,
+  ) async {
+    final Movie movie = MovieRepository().getMovies().first;
+
+    CartRepository.instance.addItem(movie, 2);
+
+    await tester.pumpWidget(
+      const MaterialApp(home: BasketScreen()),
+    );
+
+    expect(find.text('2 Tickets'), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.delete_outline));
+    await tester.pump();
+
+    expect(find.text('Your basket is empty.'), findsOneWidget);
+    expect(find.text('2 Tickets'), findsNothing);
+    expect(CartRepository.instance.getItems(), isEmpty);
+  });
 }
