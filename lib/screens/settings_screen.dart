@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:southsea_cinema/constants.dart';
 import 'package:southsea_cinema/widgets/primary_button.dart';
+import 'package:southsea_cinema/models/user_settings.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -36,6 +37,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _emailController.dispose();
     _patronController.dispose();
     super.dispose();
+  }
+
+  void _saveSettings() {
+    final String name = _nameController.text.trim();
+    final String address = _addressController.text.trim();
+    final String email = _emailController.text.trim();
+    final String patronNumber = _patronController.text.trim();
+
+    final UserSettings settings = UserSettings(
+      name: name,
+      address: address,
+      email: email,
+      patronNumber: patronNumber,
+      receiveNewsletter: _receiveNewsletter,
+    );
+
+    setState(() {
+      _confirmationMessage = 'Settings saved for ${settings.name}';
+    });
   }
 
   Widget _buildTextField(
@@ -152,11 +172,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 const SizedBox(width: 16),
                 PrimaryButton(
                   label: 'SAVE SETTINGS',
-                  onPressed: () {
-                    setState(() {
-                      _confirmationMessage = 'Settings saved!';
-                    });
-                  },
+                  onPressed: _saveSettings,
                 ),
               ],
             ),
