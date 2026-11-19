@@ -118,6 +118,29 @@ class _BasketScreenState extends State<BasketScreen> {
               ),
             ),
           ),
+          const SizedBox(width: 8),
+          IconButton(
+            icon: const Icon(
+              Icons.delete_outline,
+              color: cinemaFontWhite,
+            ),
+            style: IconButton.styleFrom(
+              backgroundColor: cinemaBrandDark,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.zero,
+              ),
+              padding: const EdgeInsets.all(12),
+            ),
+            constraints: const BoxConstraints(
+              minWidth: 48,
+              minHeight: 48,
+            ),
+            onPressed: () {
+              setState(() {
+                CartRepository.instance.removeItem(item.movie);
+              });
+            },
+          ),
         ],
       ),
     );
@@ -176,6 +199,7 @@ class _BasketScreenState extends State<BasketScreen> {
               ),
             ),
           ),
+          SizedBox(width: 56),
         ],
       ),
     );
