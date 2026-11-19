@@ -24,4 +24,37 @@ void main() {
     expect(find.text('CANCEL'), findsOneWidget);
     expect(find.text('SAVE SETTINGS'), findsOneWidget);
   });
+
+  testWidgets('customer can enter and save settings', (tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: SettingsScreen(),
+      ),
+    );
+
+    await tester.enterText(find.byType(TextField).at(0), 'Alex Smith');
+    await tester.enterText(find.byType(TextField).at(1), 'Portsmouth');
+    await tester.enterText(
+      find.byType(TextField).at(2),
+      'alex@example.com',
+    );
+    await tester.enterText(find.byType(TextField).at(3), '1234');
+
+    await tester.ensureVisible(find.byType(Switch));
+    await tester.pump();
+
+    await tester.tap(find.byType(Switch));
+    await tester.pump();
+
+    expect(tester.widget<Switch>(find.byType(Switch)).value, isTrue);
+
+    await tester.ensureVisible(find.text('SAVE SETTINGS'));
+    await tester.pump();
+
+    await tester.tap(find.text('SAVE SETTINGS'));
+    await tester.pump();
+
+    expect(find.text('Settings saved for Alex Smith'), findsOneWidget);
+  });
+  
 }
