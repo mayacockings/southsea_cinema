@@ -42,11 +42,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField).at(0), 'Alex Smith');
-    await tester.enterText(find.byType(TextField).at(1), 'Portsmouth');
+    await tester.enterText(find.byType(TextField).at(0), 'Maya Cockings');
+    await tester.enterText(find.byType(TextField).at(1), 'Gosport');
     await tester.enterText(
       find.byType(TextField).at(2),
-      'alex@example.com',
+      'maya@test.com',
     );
     await tester.enterText(find.byType(TextField).at(3), '1234');
 
@@ -64,16 +64,16 @@ void main() {
     await tester.tap(find.text('SAVE SETTINGS'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Settings saved for Alex Smith'), findsOneWidget);
+    expect(find.text('Settings saved for Maya Cockings'), findsOneWidget);
   });
 
   testWidgets('settings screen loads previously saved preferences',
       (tester) async {
     final preferences = SharedPreferencesAsync();
 
-    await preferences.setString('cinema_name', 'Alex Smith');
-    await preferences.setString('cinema_address', 'Portsmouth');
-    await preferences.setString('cinema_email', 'alex@example.com');
+    await preferences.setString('cinema_name', 'Maya Cockings');
+    await preferences.setString('cinema_address', 'Gosport');
+    await preferences.setString('cinema_email', 'maya@test.com');
     await preferences.setString('cinema_patron_number', '1234');
     await preferences.setBool('cinema_receive_newsletter', true);
 
@@ -86,13 +86,13 @@ void main() {
 
     expect(
         tester.widget<TextField>(find.byType(TextField).at(0)).controller!.text,
-        'Alex Smith');
+        'Maya Cockings');
     expect(
         tester.widget<TextField>(find.byType(TextField).at(1)).controller!.text,
-        'Portsmouth');
+        'Gosport');
     expect(
         tester.widget<TextField>(find.byType(TextField).at(2)).controller!.text,
-        'alex@example.com');
+        'maya@test.com');
     expect(
         tester.widget<TextField>(find.byType(TextField).at(3)).controller!.text,
         '1234');
@@ -109,11 +109,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField).at(0), 'Jamie Taylor');
-    await tester.enterText(find.byType(TextField).at(1), 'Brighton');
+    await tester.enterText(find.byType(TextField).at(0), 'Maya Cockings');
+    await tester.enterText(find.byType(TextField).at(1), 'Gosport');
     await tester.enterText(
       find.byType(TextField).at(2),
-      'jamie@example.com',
+      'maya@test.com',
     );
     await tester.enterText(find.byType(TextField).at(3), '5678');
 
@@ -146,11 +146,11 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField).at(0), 'Alex Smith');
-    await tester.enterText(find.byType(TextField).at(1), 'Portsmouth');
+    await tester.enterText(find.byType(TextField).at(0), 'Maya Cockings');
+    await tester.enterText(find.byType(TextField).at(1), 'Gosport');
     await tester.enterText(
       find.byType(TextField).at(2),
-      'alex@example.com',
+      'maya@test.com',
     );
     await tester.enterText(find.byType(TextField).at(3), '1234');
 
@@ -180,13 +180,13 @@ void main() {
 
     expect(
         tester.widget<TextField>(find.byType(TextField).at(0)).controller!.text,
-        'Alex Smith');
+        'Maya Cockings');
     expect(
         tester.widget<TextField>(find.byType(TextField).at(1)).controller!.text,
-        'Portsmouth');
+        'Gosport');
     expect(
         tester.widget<TextField>(find.byType(TextField).at(2)).controller!.text,
-        'alex@example.com');
+        'maya@test.com');
     expect(
         tester.widget<TextField>(find.byType(TextField).at(3)).controller!.text,
         '1234');
