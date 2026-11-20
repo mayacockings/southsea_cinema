@@ -115,7 +115,7 @@ void main() {
       find.byType(TextField).at(2),
       'maya@test.com',
     );
-    await tester.enterText(find.byType(TextField).at(3), '5678');
+    await tester.enterText(find.byType(TextField).at(3), '3654');
 
     await tester.ensureVisible(find.byType(Switch));
     await tester.pump();
@@ -131,10 +131,10 @@ void main() {
 
     final preferences = SharedPreferencesAsync();
 
-    expect(await preferences.getString('cinema_name'), 'Jamie Taylor');
-    expect(await preferences.getString('cinema_address'), 'Brighton');
-    expect(await preferences.getString('cinema_email'), 'jamie@example.com');
-    expect(await preferences.getString('cinema_patron_number'), '5678');
+    expect(await preferences.getString('cinema_name'), 'Maya Cockings');
+    expect(await preferences.getString('cinema_address'), 'Gosport');
+    expect(await preferences.getString('cinema_email'), 'maya@test.com');
+    expect(await preferences.getString('cinema_patron_number'), '3654');
     expect(await preferences.getBool('cinema_receive_newsletter'), true);
   });
 
