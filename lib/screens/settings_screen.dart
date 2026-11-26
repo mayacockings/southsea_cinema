@@ -110,13 +110,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     TextEditingController controller, {
     int maxLines = 1,
   }) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
-            color: cinemaFontMuted,
+          style: TextStyle(
+            color: colors.onSurfaceVariant,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -125,11 +127,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
         TextField(
           controller: controller,
           maxLines: maxLines,
-          style: const TextStyle(color: cinemaFontWhite),
-          decoration: const InputDecoration(
+          style: TextStyle(color: colors.onSurface),
+          decoration: InputDecoration(
             filled: true,
-            fillColor: cinemaSurface,
-            border: OutlineInputBorder(),
+            fillColor: colors.surfaceContainerHighest,
+            border: const OutlineInputBorder(),
           ),
         ),
       ],
@@ -138,6 +140,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(appTitle),
@@ -147,10 +151,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'My Settings',
               style: TextStyle(
-                color: cinemaFontWhite,
+                color: colors.onSurface,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -168,10 +172,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(height: 24),
             _buildTextField('Patron Number', _patronController),
             const SizedBox(height: 32),
-            const Text(
+            Text(
               'Preferences',
               style: TextStyle(
-                color: cinemaFontMuted,
+                color: colors.onSurfaceVariant,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -179,11 +183,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const SizedBox(height: 16),
             Row(
               children: [
-                const Expanded(
+                Expanded(
                   child: Text(
                     'Receive news by email',
                     style: TextStyle(
-                      color: cinemaFontWhite,
+                      color: colors.onSurface,
                       fontSize: 16,
                     ),
                   ),
@@ -229,8 +233,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 16),
               Text(
                 _confirmationMessage,
-                style: const TextStyle(
-                  color: cinemaFontWhite,
+                style: TextStyle(
+                  color: colors.onSurface,
                   fontWeight: FontWeight.bold,
                 ),
               ),
