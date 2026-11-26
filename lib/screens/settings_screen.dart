@@ -5,7 +5,14 @@ import 'package:southsea_cinema/models/user_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({
+    super.key,
+    this.themeMode = ThemeMode.dark,
+    this.onThemeModeChanged,
+  });
+
+  final ThemeMode themeMode;
+  final ValueChanged<ThemeMode>? onThemeModeChanged;
 
   @override
   State<SettingsScreen> createState() {
@@ -149,10 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
             const SizedBox(height: 32),
-            _buildTextField(
-              'Full Name',
-              _nameController,
-            ),
+            _buildTextField('Full Name', _nameController),
             const SizedBox(height: 24),
             _buildTextField(
               'Address',
@@ -160,15 +164,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               maxLines: 4,
             ),
             const SizedBox(height: 24),
-            _buildTextField(
-              'Email Address',
-              _emailController,
-            ),
+            _buildTextField('Email Address', _emailController),
             const SizedBox(height: 24),
-            _buildTextField(
-              'Patron Number',
-              _patronController,
-            ),
+            _buildTextField('Patron Number', _patronController),
             const SizedBox(height: 32),
             const Text(
               'Preferences',
@@ -200,6 +198,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ],
             ),
+            if (widget.onThemeModeChanged != null)
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('Light mode'),
+                value: widget.themeMode == ThemeMode.light,
+                onChanged: (bool useLightMode) {
+                  widget.onThemeModeChanged?.call(
+                    useLightMode ? ThemeMode.light : ThemeMode.dark,
+                  );
+                },
+              ),
             const SizedBox(height: 32),
             Row(
               children: [

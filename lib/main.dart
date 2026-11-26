@@ -23,18 +23,33 @@ void main() {
   }
 }
 
-class SouthseaCinemaApp extends StatelessWidget {
+class SouthseaCinemaApp extends StatefulWidget {
   const SouthseaCinemaApp({super.key});
+
+  @override
+  State<SouthseaCinemaApp> createState() => _SouthseaCinemaAppState();
+}
+
+class _SouthseaCinemaAppState extends State<SouthseaCinemaApp> {
+  ThemeMode _themeMode = ThemeMode.dark;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appTitle,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: cinemaBrand,
+          brightness: Brightness.light,
+        ),
+      ),
+      themeMode: _themeMode,
+      darkTheme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: cinemaBackground,
         colorScheme: ColorScheme.fromSeed(
           seedColor: cinemaBrand,
+          brightness: Brightness.dark,
           primary: cinemaBrand,
           surface: cinemaSurface,
         ),
@@ -49,7 +64,21 @@ class SouthseaCinemaApp extends StatelessWidget {
       routes: {
         '/': (context) => const HomeView(),
         '/basket': (context) => const BasketScreen(),
-        '/settings': (context) => const SettingsScreen(),
+        '/settings': (context) => Builder(
+          builder: (context) {
+            final bool isDark =
+                Theme.of(context).brightness == Brightness.dark;
+
+            return SettingsScreen(
+              themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+              onThemeModeChanged: (mode) {
+                setState(() {
+                  _themeMode = mode;
+                });
+              },
+            );
+          },
+        ),
       },
     );
   }
