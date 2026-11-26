@@ -25,6 +25,8 @@ class _MovieListingState extends State<MovieListing> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -38,7 +40,7 @@ class _MovieListingState extends State<MovieListing> {
       drawer: const NavDrawer(),
       body: Container(
         margin: const EdgeInsets.all(16),
-        color: cinemaSurface,
+        color: colors.surface,
         padding: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Column(
@@ -46,8 +48,8 @@ class _MovieListingState extends State<MovieListing> {
             children: [
               Text(
                 '${widget.movie.title.toUpperCase()} (${widget.movie.ageRating})',
-                style: const TextStyle(
-                  color: cinemaFontWhite,
+                style: TextStyle(
+                  color: colors.onSurface,
                   fontSize: 24,
                 ),
               ),
@@ -59,18 +61,18 @@ class _MovieListingState extends State<MovieListing> {
                 fit: BoxFit.cover,
               ),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Southsea Cinema Room',
                 style: TextStyle(
-                  color: cinemaFontWhite,
+                  color: colors.onSurface,
                   fontSize: 16,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 '${widget.movie.screeningDate}, ${widget.movie.screeningTime}',
-                style: const TextStyle(
-                  color: cinemaFontWhite,
+                style: TextStyle(
+                  color: colors.onSurface,
                   fontSize: 16,
                 ),
               ),
@@ -82,16 +84,16 @@ class _MovieListingState extends State<MovieListing> {
                       children: [
                         Text(
                           'Runtime: ${widget.movie.runtime}',
-                          style: const TextStyle(
-                            color: cinemaFontMuted,
+                          style: TextStyle(
+                            color: colors.onSurfaceVariant,
                             fontSize: 16,
                           ),
                         ),
                         const SizedBox(width: 20),
                         Text(
                           'Genre: ${widget.movie.genre}',
-                          style: const TextStyle(
-                            color: cinemaFontMuted,
+                          style: TextStyle(
+                            color: colors.onSurfaceVariant,
                             fontSize: 16,
                           ),
                         ),
@@ -103,16 +105,16 @@ class _MovieListingState extends State<MovieListing> {
                       children: [
                         Text(
                           'Runtime: ${widget.movie.runtime}',
-                          style: const TextStyle(
-                            color: cinemaFontMuted,
+                          style: TextStyle(
+                            color: colors.onSurfaceVariant,
                             fontSize: 16,
                           ),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           'Genre: ${widget.movie.genre}',
-                          style: const TextStyle(
-                            color: cinemaFontMuted,
+                          style: TextStyle(
+                            color: colors.onSurfaceVariant,
                             fontSize: 16,
                           ),
                         ),
@@ -124,8 +126,8 @@ class _MovieListingState extends State<MovieListing> {
               const SizedBox(height: 16),
               Text(
                 widget.movie.synopsis,
-                style: const TextStyle(
-                  color: cinemaFontWhite,
+                style: TextStyle(
+                  color: colors.onSurface,
                   fontSize: 16,
                 ),
               ),
@@ -135,8 +137,8 @@ class _MovieListingState extends State<MovieListing> {
                   Expanded(
                     child: Text(
                       'Tickets (${widget.movie.formattedPrice} each)',
-                      style: const TextStyle(
-                        color: cinemaFontWhite,
+                      style: TextStyle(
+                        color: colors.onSurface,
                         fontSize: 16,
                       ),
                     ),
@@ -146,8 +148,8 @@ class _MovieListingState extends State<MovieListing> {
                     width: 100,
                     child: DropdownMenu<int>(
                       initialSelection: _ticketQuantity,
-                      textStyle: const TextStyle(
-                        color: cinemaFontWhite,
+                      textStyle: TextStyle(
+                        color: colors.onSurface,
                         fontSize: 18,
                       ),
                       dropdownMenuEntries: const [
@@ -189,8 +191,8 @@ class _MovieListingState extends State<MovieListing> {
               const SizedBox(height: 12),
               Text(
                 _bookingMessage,
-                style: const TextStyle(
-                  color: cinemaBrandLight,
+                style: TextStyle(
+                  color: colors.primary,
                   fontSize: 16,
                 ),
               ),
