@@ -20,10 +20,12 @@ bool isSupportedPlatform() {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  runApp(await createStartupApp());
+}
 
+Future<Widget> createStartupApp() async {
   if (!isSupportedPlatform()) {
-    runApp(const UnsupportedPlatformApp());
-    return;
+    return const UnsupportedPlatformApp();
   }
 
   bool useLightMode = false;
@@ -34,10 +36,8 @@ Future<void> main() async {
     debugPrint('Could not load the saved theme: $error');
   }
 
-  runApp(
-    SouthseaCinemaApp(
-      initialThemeMode: useLightMode ? ThemeMode.light : ThemeMode.dark,
-    ),
+  return SouthseaCinemaApp(
+    initialThemeMode: useLightMode ? ThemeMode.light : ThemeMode.dark,
   );
 }
 
@@ -96,47 +96,47 @@ class _SouthseaCinemaAppState extends State<SouthseaCinemaApp> {
         '/': (context) => const HomeView(),
         '/basket': (context) => const BasketScreen(),
         '/settings': (context) => Builder(
-          builder: (context) {
-            final bool isDark =
-                Theme.of(context).brightness == Brightness.dark;
+              builder: (context) {
+                final bool isDark =
+                    Theme.of(context).brightness == Brightness.dark;
 
-            return SettingsScreen(
-              themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-              onThemeModeChanged: (mode) async {
-                if (_savingTheme || mode == _themeMode) {
-                  return;
-                }
+                return SettingsScreen(
+                  themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+                  onThemeModeChanged: (mode) async {
+                    if (_savingTheme || mode == _themeMode) {
+                      return;
+                    }
 
-                _savingTheme = true;
+                    _savingTheme = true;
 
-                try {
-                  await _preferences.setBool(
-                    _lightModeKey,
-                    mode == ThemeMode.light,
-                  );
+                    try {
+                      await _preferences.setBool(
+                        _lightModeKey,
+                        mode == ThemeMode.light,
+                      );
 
-                  if (mounted) {
-                    setState(() {
-                      _themeMode = mode;
-                    });
-                  }
-                } catch (error) {
-                  debugPrint('Could not save the theme: $error');
+                      if (mounted) {
+                        setState(() {
+                          _themeMode = mode;
+                        });
+                      }
+                    } catch (error) {
+                      debugPrint('Could not save the theme: $error');
 
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Could not save the theme choice.'),
-                      ),
-                    );
-                  }
-                } finally {
-                  _savingTheme = false;
-                }
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Could not save the theme choice.'),
+                          ),
+                        );
+                      }
+                    } finally {
+                      _savingTheme = false;
+                    }
+                  },
+                );
               },
-            );
-          },
-        ),
+            ),
       },
     );
   }
