@@ -12,6 +12,13 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "chrome"
+    },
+    {
+      "name": "Southsea Cinema (Android)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "emulator-5554"
     }
   ]
 }
