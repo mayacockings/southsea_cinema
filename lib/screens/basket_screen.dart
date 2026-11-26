@@ -18,6 +18,13 @@ class BasketScreen extends StatefulWidget {
 class _BasketScreenState extends State<BasketScreen> {
   String _confirmationMessage = '';
   bool _savingBooking = false;
+  late Future<List<Booking>> _pastBookings;
+
+  @override
+  void initState() {
+    super.initState();
+    _pastBookings = CinemaDatabase.instance.getAllBookings();
+  }
 
   String _buildSummary(List<CartItem> items) {
     final List<String> parts = [];
@@ -69,6 +76,7 @@ class _BasketScreenState extends State<BasketScreen> {
 
       setState(() {
         _confirmationMessage = 'Booking #$bookingNumber confirmed!';
+        _pastBookings = database.getAllBookings();
       });
     } catch (error) {
       if (!mounted) {
@@ -205,7 +213,10 @@ class _BasketScreenState extends State<BasketScreen> {
         fontWeight: FontWeight.bold,
       );
     } else {
-      style = const TextStyle(color: cinemaFontWhite, fontSize: 16);
+      style = const TextStyle(
+        color: cinemaFontWhite,
+        fontSize: 16,
+      );
     }
 
     return Padding(
@@ -342,6 +353,40 @@ class _BasketScreenState extends State<BasketScreen> {
     );
   }
 
+  Widget _buildPastBookings() {
+    return FutureBuilder<List<Booking>>(
+      future: _pastBookings,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return const Text('Could not load past bookings.');
+        }
+
+        final List<Booking> bookings = snapshot.data ?? [];
+        if (bookings.isEmpty) {
+          return const Text('No past bookings yet.');
+        }
+
+        return Column(
+          children: [
+            for (final Booking booking in bookings)
+              Card(
+                child: ListTile(
+                  title: Text('Booking #${booking.bookingNumber}'),
+                  subtitle: Text('${booking.summary}\n${booking.date}'),
+                  trailing: Text('£${booking.total.toStringAsFixed(2)}'),
+                  isThreeLine: true,
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final CartRepository cart = CartRepository.instance;
@@ -376,9 +421,21 @@ class _BasketScreenState extends State<BasketScreen> {
       appBar: AppBar(title: const Text(appTitle)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
-        child: AbsorbPointer(
-          absorbing: _savingBooking,
-          child: content,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AbsorbPointer(
+              absorbing: _savingBooking,
+              child: content,
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'Past bookings',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 8),
+            _buildPastBookings(),
+          ],
         ),
       ),
     );
