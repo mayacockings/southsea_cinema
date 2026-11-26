@@ -96,27 +96,29 @@ class _BasketScreenState extends State<BasketScreen> {
   }
 
   Widget _buildEmptyState() {
-    return const Center(
+    final ColorScheme colors = Theme.of(context).colorScheme;
+
+    return Center(
       child: Padding(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.shopping_basket_outlined,
               size: 64,
-              color: cinemaFontMuted,
+              color: colors.onSurfaceVariant,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Your basket is empty.',
-              style: TextStyle(color: cinemaFontWhite, fontSize: 20),
+              style: TextStyle(color: colors.onSurface, fontSize: 20),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Select a movie and add tickets to your basket.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: cinemaFontMuted, fontSize: 16),
+              style: TextStyle(color: colors.onSurfaceVariant, fontSize: 16),
             ),
           ],
         ),
@@ -125,6 +127,12 @@ class _BasketScreenState extends State<BasketScreen> {
   }
 
   Widget _buildLineItem(CartRepository cart, CartItem item) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
+    final TextStyle detailStyle = TextStyle(
+      color: colors.onSurface,
+      fontSize: 16,
+    );
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
@@ -134,8 +142,8 @@ class _BasketScreenState extends State<BasketScreen> {
             flex: 2,
             child: Text(
               '${item.quantity} Tickets',
-              style: const TextStyle(
-                color: cinemaBrand,
+              style: TextStyle(
+                color: colors.primary,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -146,26 +154,16 @@ class _BasketScreenState extends State<BasketScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '${item.quantity} Standard',
-                  style: const TextStyle(color: cinemaFontWhite, fontSize: 16),
-                ),
+                Text('${item.quantity} Standard', style: detailStyle),
+                const SizedBox(height: 4),
+                Text(item.movie.title.toUpperCase(), style: detailStyle),
                 const SizedBox(height: 4),
                 Text(
-                  item.movie.title.toUpperCase(),
-                  style: const TextStyle(color: cinemaFontWhite, fontSize: 16),
+                  '${item.movie.screeningDate}, ${item.movie.screeningTime}',
+                  style: detailStyle,
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  '${item.movie.screeningDate}, '
-                  '${item.movie.screeningTime}',
-                  style: const TextStyle(color: cinemaFontWhite, fontSize: 16),
-                ),
-                const SizedBox(height: 4),
-                const Text(
-                  'Southsea Cinema Room',
-                  style: TextStyle(color: cinemaFontWhite, fontSize: 16),
-                ),
+                Text('Southsea Cinema Room', style: detailStyle),
               ],
             ),
           ),
@@ -174,14 +172,14 @@ class _BasketScreenState extends State<BasketScreen> {
             child: Text(
               '£${item.lineTotal.toStringAsFixed(2)}',
               textAlign: TextAlign.end,
-              style: const TextStyle(color: cinemaFontWhite, fontSize: 16),
+              style: detailStyle,
             ),
           ),
           const SizedBox(width: 8),
           IconButton(
-            icon: const Icon(Icons.delete_outline, color: cinemaFontWhite),
+            icon: Icon(Icons.delete_outline, color: colors.onErrorContainer),
             style: IconButton.styleFrom(
-              backgroundColor: cinemaBrandDark,
+              backgroundColor: colors.errorContainer,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.zero,
               ),
@@ -204,19 +202,17 @@ class _BasketScreenState extends State<BasketScreen> {
     String value, {
     bool emphasise = false,
   }) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
     final TextStyle style;
 
     if (emphasise) {
-      style = const TextStyle(
-        color: cinemaFontWhite,
+      style = TextStyle(
+        color: colors.onSurface,
         fontSize: 18,
         fontWeight: FontWeight.bold,
       );
     } else {
-      style = const TextStyle(
-        color: cinemaFontWhite,
-        fontSize: 16,
-      );
+      style = TextStyle(color: colors.onSurface, fontSize: 16);
     }
 
     return Padding(
@@ -232,13 +228,19 @@ class _BasketScreenState extends State<BasketScreen> {
   }
 
   Widget _buildBasketList(CartRepository cart, List<CartItem> items) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
+    final TextStyle columnHeadingStyle = TextStyle(
+      color: colors.onSurface,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    );
     final List<Widget> children = [];
 
     children.add(
-      const Text(
+      Text(
         'MY ORDER',
         style: TextStyle(
-          color: cinemaFontWhite,
+          color: colors.onSurface,
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),
@@ -248,43 +250,25 @@ class _BasketScreenState extends State<BasketScreen> {
     children.add(const SizedBox(height: 24));
 
     children.add(
-      const Row(
+      Row(
         children: [
           Expanded(
             flex: 2,
-            child: Text(
-              'Item',
-              style: TextStyle(
-                color: cinemaFontWhite,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: Text('Item', style: columnHeadingStyle),
           ),
           Expanded(
             flex: 5,
-            child: Text(
-              'Details',
-              style: TextStyle(
-                color: cinemaFontWhite,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: Text('Details', style: columnHeadingStyle),
           ),
           Expanded(
             flex: 2,
             child: Text(
               'Price',
               textAlign: TextAlign.end,
-              style: TextStyle(
-                color: cinemaFontWhite,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: columnHeadingStyle,
             ),
           ),
-          SizedBox(width: 56),
+          const SizedBox(width: 56),
         ],
       ),
     );
@@ -339,8 +323,8 @@ class _BasketScreenState extends State<BasketScreen> {
       children.add(
         Text(
           _confirmationMessage,
-          style: const TextStyle(
-            color: cinemaFontWhite,
+          style: TextStyle(
+            color: colors.onSurface,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -389,6 +373,7 @@ class _BasketScreenState extends State<BasketScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
     final CartRepository cart = CartRepository.instance;
     final List<CartItem> items = cart.getItems();
 
@@ -403,8 +388,8 @@ class _BasketScreenState extends State<BasketScreen> {
             const SizedBox(height: 12),
             Text(
               _confirmationMessage,
-              style: const TextStyle(
-                color: cinemaFontWhite,
+              style: TextStyle(
+                color: colors.onSurface,
                 fontWeight: FontWeight.bold,
               ),
             ),
